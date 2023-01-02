@@ -12,7 +12,8 @@
     "vite": "^2.9.9"
   },
   "dependencies": {
-    "prettier": "^2.7.1",
+    "eventemitter3": "^5.0.0",
+    "prettier": "^2.8.1",
     "tinybench": "^1.0.2"
   }
 }

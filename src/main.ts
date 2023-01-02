@@ -1,14 +1,23 @@
-import Benchmark from "tinybench";
+import { benchEventEmitters } from "./eventEmitters";
 
-var suite = new Benchmark.Suite();
+const app = document.getElementById("app");
+const log = document.createElement("p");
 
-suite
-  .add("case 1", function () {})
-  .add("case 2", function () {})
-  .on("cycle", function (event) {
-    console.log(String(event.target));
-  })
-  .on("complete", function () {
-    console.log("Fastest is " + this.filter("fastest").map("name"));
-  })
-  .run({ async: true });
+const benchmarks = {
+  eventEmitters: benchEventEmitters,
+};
+
+Object.entries(benchmarks).forEach(([name, run]) => {
+  const button = document.createElement("button");
+  const logger = (message: string) => {
+    log.innerText += `${message}\n`
+  };
+  button.addEventListener("click", () => {
+    log.innerText = "";
+    run(logger);
+  });
+  button.innerText = `Run ${name} benchmark`;
+  app?.appendChild(button);
+});
+
+app?.appendChild(log);
